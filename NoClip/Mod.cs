@@ -8,11 +8,19 @@ namespace NoClip
 {
     public class NoClipSystem : GenericSystemBase, IModSystem {
         private const int LayerPlayers = 12;
+        private const int LayerStatics = 9;
         private const int LayerDefault = 0;
         private bool _hasBeenNightTime = false;
 
-        //protected override void Initialise() {
+        //protected override void Initialise()
+        //{
         //    base.Initialise();
+
+        //    // print layer names
+        //    for (int i = 0; i < 16; i++)
+        //    {
+        //        Debug.Log($"NoClip Mod: Layer {i}: {LayerMask.LayerToName(i)}");
+        //    }
         //}
 
         private void OnNightTimeSwitch(bool isNowNightTime)
@@ -21,6 +29,7 @@ namespace NoClip
             // turn collision (back) on if not night time
             Debug.Log($"NoClip Mod: NoClip is now {(isNowNightTime ? "on" : "off")}.");
             Physics.IgnoreLayerCollision(LayerPlayers, LayerDefault, isNowNightTime);
+            Physics.IgnoreLayerCollision(LayerPlayers, LayerStatics, isNowNightTime);
         }
 
         protected override void OnUpdate() {
