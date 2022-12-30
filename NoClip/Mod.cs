@@ -4,7 +4,8 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace NoClipMod {
+namespace NoClip
+{
     public class NoClipSystem : GenericSystemBase, IModSystem {
         private const int LayerPlayers = 12;
         private const int LayerDefault = 0;
