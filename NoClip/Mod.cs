@@ -1,8 +1,6 @@
 ﻿using Kitchen;
 using KitchenMods;
 using UnityEngine;
-using Unity.Collections;
-using Unity.Entities;
 
 namespace NoClip
 {
@@ -10,7 +8,7 @@ namespace NoClip
         private const int LayerPlayers = 12;
         private const int LayerStatics = 9;
         private const int LayerDefault = 0;
-        private bool _hasBeenNightTime = false;
+        private bool _hasBeenPrepTime = false;
 
         //protected override void Initialise()
         //{
@@ -23,20 +21,20 @@ namespace NoClip
         //    }
         //}
 
-        private void OnNightTimeSwitch(bool isNowNightTime)
+        private void OnPrepTimeSwitch(bool isNowPrepTime)
         {
-            // prep phase is called night time. ignore collision only in prep phase
-            // turn collision (back) on if not night time
-            Debug.Log($"NoClip Mod: NoClip is now {(isNowNightTime ? "on" : "off")}.");
-            Physics.IgnoreLayerCollision(LayerPlayers, LayerDefault, isNowNightTime);
-            Physics.IgnoreLayerCollision(LayerPlayers, LayerStatics, isNowNightTime);
+            // ignore collision only in prep phase
+            // turn collision (back) on if not prep phase
+            Debug.Log($"NoClip Mod: NoClip is now {(isNowPrepTime ? "on" : "off")}.");
+            Physics.IgnoreLayerCollision(LayerPlayers, LayerDefault, isNowPrepTime);
+            Physics.IgnoreLayerCollision(LayerPlayers, LayerStatics, isNowPrepTime);
         }
 
         protected override void OnUpdate() {
-            if (this.HasSingleton<SIsNightTime>() != _hasBeenNightTime)
+            if (GameInfo.IsPreparationTime != _hasBeenPrepTime)
             {
-                _hasBeenNightTime = !_hasBeenNightTime;
-                OnNightTimeSwitch(_hasBeenNightTime);
+                _hasBeenPrepTime = !_hasBeenPrepTime;
+                OnPrepTimeSwitch(_hasBeenPrepTime);
             }
         }
     }
